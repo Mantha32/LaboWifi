@@ -6,8 +6,10 @@
 #### 1. Détecter si un ou plusieurs clients 802.11 spécifiques sont à
 Voir fichier `xxx.py`
 Le script se lance comme suit :  
-`cd [dossier_ou_se_trouve_xxx.py]`  
-`python xxx.py [MAC_Addess]`
+`./monitorOn.sh`  
+`cd [dossier_ou_se_trouve_sniffingMacSta.py]`  
+`python sniffingMacSta.py [MAC_Addess]`
+
 ###### * Qestion 1: quel type de trames sont nécessaires pour détecter les clients de manière passive ?
 Les `prob rquest` sont les trames envoyées par les clients pour demander des informations, soit à l'AP (spécifié par SSID), soit à tous les APs disponibles (spécifiés avec le broadcast SSID).  
 ###### * Qestion 2: pourquoi le suivi n’est-il plus possible sur iPhone depuis iOS 8 ?
@@ -20,4 +22,3 @@ Voir fichier `xxx.py`
 Le script se lance comme suit :  
 `cd [dossier_ou_se_trouve_xxx.py]`  
 `python xxx.py`
-
