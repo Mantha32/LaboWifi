@@ -1,0 +1,96 @@
+#!/usr/bin/env python
+#This previous line ensures that this script run under python context
+# sniffingAPbasedOnSTA.py - find AP based on the device 
+# Author: Yosra Harbaoui, Iando Rafidimalala
+
+#import the system function and signal handler
+import sys, os, signal
+#import the scapy function
+from scapy.all import *
+#import the Process function 
+from multiprocessing import Process
+
+interface = "wlx00c0ca3fb74a"  #monitor interface
+macSTA_list = [] # Keep track of unique MAC device addresses
+macAP_list = [] # Keep track of unique MAC AP addresses
+
+#Search the device based on his MAC and each AP associate on it
+# This function sniff beacon, data packet and probe
+#The packet that was sniffed is passed as the function argument
+def packetAnalyzer(pkt):
+	stamgmtstypes = (0, 2, 4)
+	# Check to make sure we got an 802.11 packet
+	if pkt.haslayer(Dot11):e
+		# The device try to seek any BSS weel-know
+		if pkt.type == 0 and pkt.subtype == 4:			
+            # Check to see if we have seen the STA MAC address before, if not, keep track on it
+            if pkt.addr2 not in macSTA_list:
+				mac_list.append(pkt.addr2)
+			if
+		# Check to see if it's device sending or receiving packet
+		# The device receives packet , check the address 1 
+		# The device sends packet , check the Source Adresse (adress 2)
+		# the packet to or from the device, check the packet which transit between the DS:
+		# Receiver address type 1 or source address type 4 
+		elif pkt.type == 2:
+			checker = ((pkt.addr1 == macAdress) or (pkt.addr2 == macAdress) or (pkt.addr4 == macAdress))
+			
+		
+#A function handler the interuption from user 	
+def signal_handler(signal, frame):
+	print "Goodbye!"
+	p.terminate()
+	p.join()
+	sys.exit(0)
+
+def monitor_on(macAdress):
+    iface = macSTA
+    status = False
+    
+    if 'wlan' in iface:
+		print('\n[' +G+ '+' +W+ '] Interface found!\nTurning on monitoring mode...')
+		os.system('ifconfig ' + iface + ' down')
+		os.system('iwconfig ' + iface + ' mode monitor')
+		os.system('ifconfig ' + iface + ' up')
+		print('[' +G+ '+' +W+ '] Turned on monitoring mode on: ' + iface)
+		status = True
+
+# A function to hop among channels
+def channel_hopper():
+    while True:
+        try:
+            channel = random.randrange(1,15)
+            os.system("iw dev %s set channel %d" % (interface, channel))
+            time.sleep(1)
+        except KeyboardInterrupt:
+            break
+
+if __name__ == "__main__":
+	#Ensure that we have make the client MAC adress as argument of this script
+	if len(sys.argv) != 2:
+		print "Need Mac Address pass through argument on this script "
+		sys.exit(1)
+	
+	#check the length the MAC address to avoid error
+	#we assume that the MAC address syntax is correct	
+	if len(sys.argv[1]) != 17:
+		print "wrong MAC address syntax"
+		sys.exit(1)
+
+	macAdress = sys.argv[1]
+
+	# Start the channel hopper
+	p = Process(target = channel_hopper)
+	p.start()
+    
+	print "start sniffing the station using this MAC: %s " %(macAdress)
+
+	# Capture CTRL-C to interrupt the script
+	signal.signal(signal.SIGINT, signal_handler)
+
+
+	# Start the sniffer
+	#Invoke the scapy function sniff(), pointing to the monitor mode interface,
+	#and telling scapy to call searchSTA() for each packet received
+	sniff(iface=interface,prn=packetAnalyzer)
+	
