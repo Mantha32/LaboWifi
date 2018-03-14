@@ -18,13 +18,19 @@ interface = "wlx00c0ca3fb74a"  #monitor interface
 #The packet that was sniffed is passed as the function argument
 def searchSTA(p):
 	checker = False;
+	stamgmtstypes = (0, 2, 4)
 	# Check to make sure we got an 802.11 packet
 	if p.haslayer(Dot11):
 		# Check to see if it's a device probing for networks and his response
-		if p.haslayer(Dot11ProbeReq) :
-			checker = p[Dot11].addr2 == macAdress
-		elif p.haslayer(Dot11ProbeResp) :
-			checker = p[Dot11].addr1 == macAdress
+		if p.type == 0 and p.subtype in stamgmtstypes:
+			checker = p.addr2 == macAdress
+		# Check to see if it's device sending or receiving packet
+		# The device receives packet , check the address 1 
+		# The device sends packet , check the Source Adresse (adress 2)
+		# the packet to or from the device, check the packet which transit between the DS:
+		# Receiver address type 1 or source address type 4 
+		elif p.type == 2:
+			checker = ((p.addr1 == macAdress) or (p.addr2 == macAdress) or (p.addr4 == macAdress))
 			
 	#Print that the device is found and end up the script	
 	if checker:
