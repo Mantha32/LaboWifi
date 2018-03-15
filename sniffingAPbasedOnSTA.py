@@ -50,7 +50,7 @@ def packetAnalyzer(pkt):
 				recordPair(STA_MAC, SSID)
 				
 				# Display Device MAC and his discovered AP (BSSID.SSID)
-				print " %s  %s %s" % (STA_MAC, BSSID, SSID) 			
+				print "%s    %s    %s" % (STA_MAC, BSSID, SSID) 			
 			
 		
 #A function handler the interuption from user 	
@@ -77,7 +77,10 @@ if __name__ == "__main__":
 	p.start()
     
 	print "start sniffing the station!"
-
+	# Print the program header
+	print "-=-=-=-=-=-= AP base on STA =-=-=-=-=-=-"
+	print "MAC_STA 		BSSID             SSID"
+    
 	# Capture CTRL-C to interrupt the script
 	signal.signal(signal.SIGINT, signal_handler)
 
