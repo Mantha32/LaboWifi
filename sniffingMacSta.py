@@ -72,8 +72,8 @@ if __name__ == "__main__":
 		print "Need Mac Address pass through argument on this script "
 		sys.exit(1)
 	
-	#check the length the MAC address to avoid error
-	#we assume that the MAC address syntax is correct	
+	#check the length of the MAC address to avoid error
+	#If the MAC length is correct,we assume that the MAC address syntax is well-defined and correct	
 	if len(sys.argv[1]) != 17:
 		print "wrong MAC address syntax"
 		sys.exit(1)

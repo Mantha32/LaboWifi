@@ -10,30 +10,47 @@ from scapy.all import *
 #import the Process function 
 from multiprocessing import Process
 
-interface = "wlx00c0ca3fb74a"  #monitor interface
-macSTA_list = [] # Keep track of unique MAC device addresses
-macAP_list = [] # Keep track of unique MAC AP addresses
+interface = "wlx00c0ca3fb74a"  #monitor interface, change it with your monitor
 
+# This dictionnary keeps track of unique MAC device adresse pairing with his well-known BSS
+# Unique Mac client is associate with SPA list. The Mac client is used as key
+dictSTA_APS = dict() 
+
+#Keep track of the pair (MAC client, SSID)
+#Check to make if this device MAC address exist, and add on his SSID list is the SSID is not yet record
+#otherwise add the pair (clientMac,SSID) like a new entry
+def recordPair(clientMac, SSID):
+	#Check if the device MAC address have recorded before
+	if clientMac in dictSTA_APS.keys():
+		# Check to see if we have seen the AP MAC address before, if not, record it
+		if SSID not in dictSTA_APS[clientMac]:
+			dictSTA_APS[clientMac].append(SSID)
+	else
+		#Keep track of the new pair
+		dictSTA_APS[clientMac] = list().append(SSID)
+	
+	
+		
 #Search the device based on his MAC and each AP associate on it
-# This function sniff beacon, data packet and probe
+# This function sniff the probe request sending by the client
 #The packet that was sniffed is passed as the function argument
 def packetAnalyzer(pkt):
-	stamgmtstypes = (0, 2, 4)
+	
 	# Check to make sure we got an 802.11 packet
-	if pkt.haslayer(Dot11):e
-		# The device try to seek any BSS weel-know
-		if pkt.type == 0 and pkt.subtype == 4:			
+	if pkt.haslayer(Dot11):
+		# The device try to seek any well-known BSS.
+		## Check to see if it's the device probing for networks
+		if pkt.type == 0 and pkt.subtype == 4:	#p.haslayer(Dot11ProbeReq)
+			SSID = pkt.info
+			BSSID = pkt.addr2
+			STA_MAC = pkt.addr1
             # Check to see if we have seen the STA MAC address before, if not, keep track on it
-            if pkt.addr2 not in macSTA_list:
-				mac_list.append(pkt.addr2)
-			if
-		# Check to see if it's device sending or receiving packet
-		# The device receives packet , check the address 1 
-		# The device sends packet , check the Source Adresse (adress 2)
-		# the packet to or from the device, check the packet which transit between the DS:
-		# Receiver address type 1 or source address type 4 
-		elif pkt.type == 2:
-			checker = ((pkt.addr1 == macAdress) or (pkt.addr2 == macAdress) or (pkt.addr4 == macAdress))
+            # And make sure SSID is not blank
+            if pkt.info != "":
+				recordPair(STA_MAC, SSID)
+			
+			# Display Device MAC and his discovered AP (BSSID.SSID)
+			print " %s  %s %s" % STA_MAC, BSSID, SSID) 			
 			
 		
 #A function handler the interuption from user 	
@@ -42,18 +59,6 @@ def signal_handler(signal, frame):
 	p.terminate()
 	p.join()
 	sys.exit(0)
-
-def monitor_on(macAdress):
-    iface = macSTA
-    status = False
-    
-    if 'wlan' in iface:
-		print('\n[' +G+ '+' +W+ '] Interface found!\nTurning on monitoring mode...')
-		os.system('ifconfig ' + iface + ' down')
-		os.system('iwconfig ' + iface + ' mode monitor')
-		os.system('ifconfig ' + iface + ' up')
-		print('[' +G+ '+' +W+ '] Turned on monitoring mode on: ' + iface)
-		status = True
 
 # A function to hop among channels
 def channel_hopper():
@@ -66,18 +71,6 @@ def channel_hopper():
             break
 
 if __name__ == "__main__":
-	#Ensure that we have make the client MAC adress as argument of this script
-	if len(sys.argv) != 2:
-		print "Need Mac Address pass through argument on this script "
-		sys.exit(1)
-	
-	#check the length the MAC address to avoid error
-	#we assume that the MAC address syntax is correct	
-	if len(sys.argv[1]) != 17:
-		print "wrong MAC address syntax"
-		sys.exit(1)
-
-	macAdress = sys.argv[1]
 
 	# Start the channel hopper
 	p = Process(target = channel_hopper)
@@ -91,6 +84,6 @@ if __name__ == "__main__":
 
 	# Start the sniffer
 	#Invoke the scapy function sniff(), pointing to the monitor mode interface,
-	#and telling scapy to call searchSTA() for each packet received
+	#and telling scapy to call packetAnalyzer() for each packet received
 	sniff(iface=interface,prn=packetAnalyzer)
 	
