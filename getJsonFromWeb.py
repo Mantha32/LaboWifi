@@ -18,12 +18,14 @@ import json
 
 macAddress = '' # MAC address target
 url = "http://macvendors.co/api/"
+	
 
-def get_jsonparsed_data(url):
-    response = urlopen(url)
-    data = response.read().decode("utf-8")
-    return json.loads(data)	
-
+def getVendorName(url):
+	response = urlopen(url)
+	data = response.read().decode("utf-8")
+	json_data = json.loads(data)
+	
+	return json_data['result']['company']
 	
 	
 if __name__ == "__main__":
@@ -40,7 +42,7 @@ if __name__ == "__main__":
 
 	macAddress = sys.argv[1]
 	url += macAddress
+	vendor = getVendorName(url)
 	
-	print "The vendor of this MAC :%s" %(macAddress)	
-	print (get_jsonparsed_data(url).['result'].['company'])
+	print "The vendor of this MAC :%s is %s" %(macAddress, vendor)	
 	
