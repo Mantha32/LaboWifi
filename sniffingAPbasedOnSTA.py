@@ -25,7 +25,7 @@ def recordPair(clientMac, SSID):
 		# Check to see if we have seen the AP MAC address before, if not, record it
 		if SSID not in dictSTA_APS[clientMac]:
 			dictSTA_APS[clientMac].append(SSID)
-	else
+	else:
 		#Keep track of the new pair
 		dictSTA_APS[clientMac] = list().append(SSID)
 	
@@ -40,17 +40,17 @@ def packetAnalyzer(pkt):
 	if pkt.haslayer(Dot11):
 		# The device try to seek any well-known BSS.
 		## Check to see if it's the device probing for networks
-		if pkt.type == 0 and pkt.subtype == 4:	#p.haslayer(Dot11ProbeReq)
+		if (pkt.type == 0 and pkt.subtype == 4):	#p.haslayer(Dot11ProbeReq)
 			SSID = pkt.info
 			BSSID = pkt.addr2
-			STA_MAC = pkt.addr1
-            # Check to see if we have seen the STA MAC address before, if not, keep track on it
-            # And make sure SSID is not blank
-            if pkt.info != "":
+			STA_MAC = pkt.addr3
+			# Check to see if we have seen the STA MAC address before, if not, keep track on it
+			# And make sure SSID is not blank
+			if pkt.info !="":
 				recordPair(STA_MAC, SSID)
-			
-			# Display Device MAC and his discovered AP (BSSID.SSID)
-			print " %s  %s %s" % STA_MAC, BSSID, SSID) 			
+				
+				# Display Device MAC and his discovered AP (BSSID.SSID)
+				print " %s  %s %s" % (STA_MAC, BSSID, SSID) 			
 			
 		
 #A function handler the interuption from user 	
@@ -76,7 +76,7 @@ if __name__ == "__main__":
 	p = Process(target = channel_hopper)
 	p.start()
     
-	print "start sniffing the station using this MAC: %s " %(macAdress)
+	print "start sniffing the station!"
 
 	# Capture CTRL-C to interrupt the script
 	signal.signal(signal.SIGINT, signal_handler)
