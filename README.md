@@ -18,7 +18,7 @@ A partir de la version 8 de l'IOS, iPhone utilise la `MAC randomization`. En eff
 
 
 #### 2. Clients WiFi bavards
-Voir fichier `sniffingAPbasedOnSTA.py`
+Voir fichier `sniffingAPbasedOnSTA.py`.  
 Le script se lance comme suit :  
 `cd [dossier_ou_se_trouve_sniffingAPbasedOnSTA.py]`  
 `python sniffingAPbasedOnSTA.py`
