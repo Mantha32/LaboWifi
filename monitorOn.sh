@@ -2,10 +2,10 @@
 #-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==
 # file: monitorOn.sh
 # Purpose: This script put the interface on and on monitor mode.
-#Ps : You can replace 'wlx00c0ca3fb74a' with the name of your interface  
+# Ps : You can replace 'wlan0' with the name of your interface if needed  
 # Authors: Yosra Harbaoui, Iando Rafidimalala
 #-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==
 
-sudo ip link set wlx00c0ca3fb74a down
-sudo iwconfig wlx00c0ca3fb74a  mode monitor
-sudo ip link set wlx00c0ca3fb74a up
+sudo ip link set wlan0 down
+sudo iwconfig wlan0  mode monitor
+sudo ip link set wlan0 up
