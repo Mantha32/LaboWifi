@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #This previous line ensures that this script run under python context
-# getJsonFromWeb.py - get jason object frome website , take MAC as argument
+# getJsonFromWeb.py: to  get jason object frome website and to take MAC as argument
 # Author: Yosra Harbaoui, Iando Rafidimalala
 
 #import the system function
@@ -29,7 +29,7 @@ def getVendorName(url):
 	
 	
 if __name__ == "__main__":
-	#Ensure that we have make the client MAC adress as argument of this script
+	#Ensure that the client MAC adress is an argument of this script
 	if len(sys.argv) != 2:
 		print "Need Mac Address pass through argument on this script "
 		sys.exit(1)
