@@ -7,7 +7,7 @@
 #	       The probe request contains this MAC address and the destination AP.
 #	       We use probe request frame sending by the client device to find if this particular station is
 #	       near by us. 
-			   	
+# PS: You can change your 'wlan0' with your interface name if needed			   	
 # Authors: Yosra Harbaoui, Iando Rafidimalala
 #-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==
 
@@ -20,7 +20,7 @@ from multiprocessing import Process
 
 
 macAdress = '' # MAC address target
-interface = "wlx00c0ca3fb74a"  #monitor interface
+interface = "wlan0"  #monitor interface
 
 #Search the device according his MAC adress
 #This function sniff Probe response and Probe Request sending by the device
