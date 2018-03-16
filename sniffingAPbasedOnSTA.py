@@ -4,7 +4,8 @@
 # file: sniffingAPbasedOnSTA.py
 # Purpose: Find AP based on the device
 # Description: 	Based on the sniffingMacSta.py script, the different network names annonced to 
-#		the clinets are captured. 			   	
+#		the clinets are captured. 
+# PS: You can change your 'wlan0' with your interface name if needed
 # Authors: Yosra Harbaoui, Iando Rafidimalala
 #-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==
 
@@ -25,7 +26,7 @@ except ImportError:
 import json
 
 #monitor interface, you can change it with your monitor's name
-interface = "wlx00c0ca3fb74a"  
+interface = "wlan0"  
 
 #macvendors provides API to retrieve the MAC vendor informations
 url = "http://macvendors.co/api/" 
