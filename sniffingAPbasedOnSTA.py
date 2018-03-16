@@ -1,7 +1,12 @@
 #!/usr/bin/env python
 #This previous line ensures that this script run under python context
-# sniffingAPbasedOnSTA.py: to find AP based on the device 
-# Author: Yosra Harbaoui, Iando Rafidimalala
+#-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==
+# file: sniffingAPbasedOnSTA.py
+# Purpose: Find AP based on the device
+# Description: 	Based on the sniffingMacSta.py script, the different network names annonced to 
+#		the clinets are captured. 			   	
+# Authors: Yosra Harbaoui, Iando Rafidimalala
+#-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==
 
 #import the system function and signal handler
 import sys, os, signal
