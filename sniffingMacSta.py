@@ -1,7 +1,15 @@
 #!/usr/bin/env python
 #This previous line ensures that this script run under python context
-# sniffingMacSta.py - find MAC adress based on scapy
-# Author: Yosra Harbaoui, Iando Rafidimalala
+#-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==
+# file: sniffingMacSta.py
+# Purpose: Find the client MAC address in your area
+# Description: Thanks to scapy to propose an API to deal with this issue. The mobile station sends
+#			   probe request to discover 802.11 network within its proximity. The probe request contains 
+#			   this MAC address and the destination layer-2 address (broadcast or well-kown AP).
+#		       We use probe request frame sending by the client device to find if this particular station is
+#			   near by us. 
+			   	
+# Authors: Yosra Harbaoui, Iando Rafidimalala
 
 #import the system function and signal handler
 import sys, os, signal
@@ -9,6 +17,7 @@ import sys, os, signal
 from scapy.all import *
 #import the Process function 
 from multiprocessing import Process
+
 
 macAdress = '' # MAC address target
 interface = "wlx00c0ca3fb74a"  #monitor interface
@@ -21,40 +30,24 @@ def searchSTA(p):
 	stamgmtstypes = (0, 2, 4)
 	# Check to make sure we got an 802.11 packet
 	if p.haslayer(Dot11):
+		
+		
 		# Check to see if it's a device probing for networks and his response
 		if p.type == 0 and p.subtype in stamgmtstypes:
 			checker = p.addr2 == macAdress
-		# Check to see if it's device sending or receiving packet
-		# The device receives packet , check the address 1 
-		# The device sends packet , check the Source Adresse (adress 2)
-		# the packet to or from the device, check the packet which transit between the DS:
-		# Receiver address type 1 or source address type 4 
-		elif p.type == 2:
-			checker = ((p.addr1 == macAdress) or (p.addr2 == macAdress) or (p.addr4 == macAdress))
-			
+			print p.addr2
+	
 	#Print that the device is found and end up the script	
 	if checker:
 		print "The station using this MAC \" %s \" is found!" %(macAdress)
-		sys.exit(1)
+		sys.exit(0)
 		
 #A function handler the interuption from user 	
 def signal_handler(signal, frame):
-	print "Goodbye!"
 	p.terminate()
 	p.join()
 	sys.exit(0)
 
-def monitor_on(macAdress):
-    iface = macSTA
-    status = False
-    
-    if 'wlan' in iface:
-		print('\n[' +G+ '+' +W+ '] Interface found!\nTurning on monitoring mode...')
-		os.system('ifconfig ' + iface + ' down')
-		os.system('iwconfig ' + iface + ' mode monitor')
-		os.system('ifconfig ' + iface + ' up')
-		print('[' +G+ '+' +W+ '] Turned on monitoring mode on: ' + iface)
-		status = True
 
 # A function to hop among channels
 def channel_hopper():
@@ -85,13 +78,12 @@ if __name__ == "__main__":
 	p.start()
     
 	print "start sniffing the station using this MAC: %s " %(macAdress)
-
+	print "-==-==-==-==-==-==-==-==-==-"
+	print "MAC_STA"
 	# Capture CTRL-C to interrupt the script
 	signal.signal(signal.SIGINT, signal_handler)
-
 
 	# Start the sniffer
 	#Invoke the scapy function sniff(), pointing to the monitor mode interface,
 	#and telling scapy to call searchSTA() for each packet received
 	sniff(iface=interface,prn=searchSTA)
-	
