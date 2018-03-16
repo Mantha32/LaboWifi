@@ -1,7 +1,11 @@
 #!/usr/bin/env python
 #This previous line ensures that this script run under python context
-# getJsonFromWeb.py: to  get jason object frome website and to take MAC as argument
-# Author: Yosra Harbaoui, Iando Rafidimalala
+#-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==
+# file: getJsonFromWeb.py
+# Purpose: get jason object frome website and to take MAC as argument
+# Description: using http://macvendors.co/api/xx:xx:xx:xx:xx:xx			   	
+# Authors: Yosra Harbaoui, Iando Rafidimalala
+#-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==
 
 #import the system function
 import sys
