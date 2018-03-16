@@ -62,7 +62,7 @@ def packetAnalyzer(pkt):
 			# And make sure SSID is not blank
 			if pkt.info !="":
 				recordPair(pkt.addr2, pkt.info)
-				#print ("PPPPP %s ( %s ) - %s") %(pkt.addr2, getVendorName(pkt.addr2), pkt.info)			
+				display()	#display when we meet a client		
 			
 
 
@@ -72,8 +72,10 @@ def getVendorName(mac):
 		response = urlopen(url + mac)
 		data = response.read().decode("utf-8")
 		json_data = json.loads(data)
-		result = json_data['result']['company']
-	
+		result = "no result"
+		if(json_data['result']['company'])
+			result = json_data['result']['company']
+		
 	except KeyError:
 		print "Err.. %s company not found" %(mac)
 	return  result
@@ -87,7 +89,6 @@ def display():
 			ssidToString += ssid + ", "
 		
 		print ("%s ( %s ) - %s") %(key, company, ssidToString)
-	threading.Timer(20, display).start()	#display() launch each 20 second
 	print('----------------------------------------------------')
 	
 	
@@ -109,9 +110,6 @@ if __name__ == "__main__":
     
 	# Capture CTRL-C to interrupt the script
 	signal.signal(signal.SIGINT, signal_handler)
-	
-	#periodic display	
-	display()
 	
 	# Start the sniffer
 	#Invoke the scapy function sniff(), pointing to the monitor mode interface,
