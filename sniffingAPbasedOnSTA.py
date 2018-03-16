@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #This previous line ensures that this script run under python context
-# sniffingAPbasedOnSTA.py - find AP based on the device 
+# sniffingAPbasedOnSTA.py: to find AP based on the device 
 # Author: Yosra Harbaoui, Iando Rafidimalala
 
 #import the system function and signal handler
@@ -15,15 +15,14 @@ try:
     # For Python 3.0 and later
     from urllib.request import urlopen
 except ImportError:
-    # Fall back to Python 2's urllib2
     from urllib2 import urlopen
     
 import json
 
-#monitor interface, change it with your monitor
+#monitor interface, you can change it with your monitor's name
 interface = "wlx00c0ca3fb74a"  
 
-#macvendors provide API to retrieve the MAC vendor informations
+#macvendors provides API to retrieve the MAC vendor informations
 url = "http://macvendors.co/api/" 
 
 # This dictionnary keeps track of unique MAC device adresse pairing with his well-known BSS
