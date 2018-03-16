@@ -3,13 +3,13 @@
 #-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==
 # file: sniffingMacSta.py
 # Purpose: Find the client MAC address in your area
-# Description: Thanks to scapy to propose an API to deal with this issue. The mobile station sends
-#			   probe request to discover 802.11 network within its proximity. The probe request contains 
-#			   this MAC address and the destination layer-2 address (broadcast or well-kown AP).
-#		       We use probe request frame sending by the client device to find if this particular station is
-#			   near by us. 
+# Description: The mobile station sends probe request to discover 802.11 network within its proximity. 
+#	       The probe request contains this MAC address and the destination AP.
+#	       We use probe request frame sending by the client device to find if this particular station is
+#	       near by us. 
 			   	
 # Authors: Yosra Harbaoui, Iando Rafidimalala
+#-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==-==
 
 #import the system function and signal handler
 import sys, os, signal
