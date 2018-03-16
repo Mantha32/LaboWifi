@@ -4,7 +4,7 @@
 `Iando Rafidimalala Thévoz` & `Yosra Harbaoui`
 
 #### 1. Détecter si un ou plusieurs clients 802.11 spécifiques sont à
-Voir fichier `xxx.py`
+Voir fichier `sniffingMacSta.py`
 Le script se lance comme suit :  
 `./monitorOn.sh`  
 `cd [dossier_ou_se_trouve_sniffingMacSta.py]`  
@@ -18,7 +18,7 @@ A partir de la version 8 de l'IOS, iPhone utilise la `MAC randomization`. En eff
 
 
 #### 2. Clients WiFi bavards
-Voir fichier `xxx.py`
+Voir fichier `sniffingAPbasedOnSTA.py`
 Le script se lance comme suit :  
-`cd [dossier_ou_se_trouve_xxx.py]`  
-`python xxx.py`
+`cd [dossier_ou_se_trouve_sniffingAPbasedOnSTA.py]`  
+`python sniffingAPbasedOnSTA.py`
